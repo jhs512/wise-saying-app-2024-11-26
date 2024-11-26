@@ -1,5 +1,6 @@
 package com.ll.domain.wiseSaying.controller;
 
+import com.ll.App.App;
 import com.ll.standard.util.TestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
