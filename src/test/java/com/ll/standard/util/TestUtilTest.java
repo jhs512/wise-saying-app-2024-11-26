@@ -29,7 +29,7 @@ public class TestUtilTest {
 
     @Test
     @DisplayName("TestUtil.setOutToByteArray()")
-    public void t1() {
+    public void t2() {
         ByteArrayOutputStream byteArrayOutputStream = TestUtil.setOutToByteArray();
 
         System.out.println("2 / 이순신 / 나의 죽음을 적들에게 알리지 말라!");
