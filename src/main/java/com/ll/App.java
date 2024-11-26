@@ -12,6 +12,13 @@ public class App {
     public void run() {
         System.out.println("== 명언 앱 ==");
 
-        System.out.print("명령) ");
+        while (true) {
+            System.out.print("명령) ");
+            String cmd = scanner.nextLine();
+
+            if ("종료".equals(cmd)) {
+                break;
+            }
+        }
     }
 }
