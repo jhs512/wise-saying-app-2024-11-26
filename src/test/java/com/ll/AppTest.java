@@ -1,6 +1,5 @@
 package com.ll;
 
-import com.ll.App.App;
 import com.ll.standard.util.TestUtil;
 
 import java.io.ByteArrayOutputStream;

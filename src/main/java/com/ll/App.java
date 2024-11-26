@@ -1,4 +1,4 @@
-package com.ll.App;
+package com.ll;
 
 import java.util.Scanner;
 
