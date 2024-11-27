@@ -50,7 +50,7 @@ public class JsonUtilTest {
 
 
     @Test
-    @DisplayName("맵을 JSON으로 바꿀 수 있다.(숫자 필드)")
+    @DisplayName("맵을 JSON으로 바꿀 수 있다.(숫자(정수) 필드)")
     public void t3() {
         // given
         Map<String, Object> map = new LinkedHashMap<>();
@@ -67,6 +67,30 @@ public class JsonUtilTest {
                     "id": 1,
                     "name": "이름",
                     "gender": "남자"
+                }
+                """.stripIndent().trim());
+    }
+
+    @Test
+    @DisplayName("맵을 JSON으로 바꿀 수 있다.(숫자(실수) 필드)")
+    public void t4() {
+        // given
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("id", 1);
+        map.put("name", "이름");
+        map.put("gender", "남자");
+        map.put("height", 178.1543221);
+
+        // when
+        String jsonStr = Util.json.toString(map);
+
+        // then
+        assertThat(jsonStr).isEqualTo("""
+                {
+                    "id": 1,
+                    "name": "이름",
+                    "gender": "남자",
+                    "height": 178.1543221
                 }
                 """.stripIndent().trim());
     }
