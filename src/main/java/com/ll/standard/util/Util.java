@@ -1,10 +1,8 @@
 package com.ll.standard.util;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 
 public class Util {
     public static class file {
@@ -37,18 +35,47 @@ public class Util {
             }
         }
 
-        public static void delete(String filePath) {
-            Path path = Paths.get(filePath);
+        public static boolean delete(String filePath) {
+            final Path path = Paths.get(filePath);
 
             try {
-                Files.delete(path);
+                Files.walkFileTree(path, new SimpleFileVisitor<>() {
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                        Files.delete(file); // 파일 삭제
+                        return FileVisitResult.CONTINUE;
+                    }
+
+                    @Override
+                    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                        Files.delete(dir); // 디렉토리 삭제
+                        return FileVisitResult.CONTINUE;
+                    }
+                });
+                return true;
+            } catch (NoSuchFileException e) {
+                return false;
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                return false;
             }
         }
 
         public static boolean notExists(String filePath) {
             return !exists(filePath);
+        }
+
+        public static void mkdir(String dirPath) {
+            Path path = Paths.get(dirPath);
+
+            try {
+                Files.createDirectories(path);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public static boolean rmdir(String dirPath) {
+            return delete(dirPath);
         }
     }
 }
