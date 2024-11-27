@@ -36,5 +36,19 @@ public class Util {
                 return defaultValue;
             }
         }
+
+        public static void delete(String filePath) {
+            Path path = Paths.get(filePath);
+
+            try {
+                Files.delete(path);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public static boolean notExists(String filePath) {
+            return !exists(filePath);
+        }
     }
 }
