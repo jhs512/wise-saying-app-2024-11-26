@@ -128,6 +128,8 @@ public class WiseSayingControllerTest {
                 과거에 집착하지 마라.
                 작자미상
                 수정?id=2
+                새 명언 내용
+                새 작가
                 """);
 
         assertThat(output)
