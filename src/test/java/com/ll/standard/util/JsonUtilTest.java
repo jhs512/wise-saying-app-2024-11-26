@@ -24,6 +24,6 @@ public class JsonUtilTest {
                 {
                     "name": "이름"
                 }
-                """.stripIndent());
+                """.stripIndent().trim());
     }
 }

@@ -3,11 +3,12 @@ package com.ll.standard.util;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Map;
 
 public class Util {
     public static class file {
         private file() {
-        } // 유틸리티 클래스의 인스턴스화 방지
+        }
 
         public static void touch(String filePath) {
             set(filePath, "");
@@ -96,6 +97,28 @@ public class Util {
         public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
             Files.delete(dir);
             return FileVisitResult.CONTINUE;
+        }
+    }
+
+    public static class json {
+        private json() {
+        }
+
+        public static String toString(Map<String, Object> map) {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("{");
+            sb.append("\n");
+
+            map.forEach((key, value) -> {
+                sb.append("    ");
+                sb.append("\"%s\": \"%s\"".formatted(key, value));
+            });
+
+            sb.append("\n");
+            sb.append("}");
+
+            return sb.toString();
         }
     }
 }
