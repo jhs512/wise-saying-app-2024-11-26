@@ -9,14 +9,7 @@ import java.nio.file.StandardOpenOption;
 public class Util {
     public static class file {
         public static void touch(String filePath) {
-            Path path = Paths.get(filePath);
-            String content = "";
-
-            try {
-                Files.writeString(path, content, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            set(filePath, "");
         }
 
         public static boolean exists(String filePath) {
