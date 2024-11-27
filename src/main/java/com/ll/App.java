@@ -23,13 +23,18 @@ public class App {
             System.out.print("명령) ");
             String cmd = scanner.nextLine();
 
-            if ("종료".equals(cmd)) {
+            String[] cmdBits = cmd.split("\\?");
+            String actionName = cmdBits[0];
+
+            if ("종료".equals(actionName)) {
                 systemController.actionExit();
                 break;
-            } else if ("등록".equals(cmd)) {
+            } else if ("등록".equals(actionName)) {
                 wiseSyingController.actionAdd();
-            } else if ("목록".equals(cmd)) {
+            } else if ("목록".equals(actionName)) {
                 wiseSyingController.actionList();
+            } else if ("삭제".equals(actionName)) {
+                wiseSyingController.actionDelete(cmd);
             }
         }
     }
