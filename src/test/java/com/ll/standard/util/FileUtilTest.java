@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UtilTest {
+public class FileUtilTest {
     @BeforeAll
     public static void beforeAll() {
         Util.file.mkdir("temp");
