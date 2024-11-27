@@ -35,4 +35,20 @@ public class UtilTest {
                 Util.file.get(filePath, "")
         ).isEqualTo("내용");
     }
+
+    @Test
+    @DisplayName("파일을 삭제할 수 있다.")
+    public void t3() {
+        // given
+        String filePath = "test.txt";
+
+        // when
+        Util.file.touch(filePath);
+        Util.file.delete(filePath);
+
+        // then
+        assertThat(
+                Util.file.notExists(filePath)
+        ).isTrue();
+    }
 }
