@@ -51,6 +51,11 @@ public class WiseSayingController {
 
         boolean removed = wiseSayingService.deleteById(id);
 
+        if (!removed) {
+            System.out.println(id + "번 명언은 존재하지 않습니다.");
+            return;
+        }
+
         System.out.println(id + "번 명언이 삭제되었습니다.");
     }
 }
