@@ -149,9 +149,20 @@ public class Util {
                 String key = jsonField[0];
                 if (key.startsWith("\"")) key = key.substring(1);
 
-                String value = jsonField[1].substring(1, jsonField[1].length() - 1);
+                boolean valueIsString = jsonField[1].startsWith("\"") && jsonField[1].endsWith("\"");
+                String value = jsonField[1];
 
-                map.put(key, value);
+                if (valueIsString) value = value.substring(1, value.length() - 1);
+
+                if (valueIsString) {
+                    map.put(key, value);
+                } else if (value.equals("true") || value.equals("false")) {
+                    map.put(key, value.equals("true"));
+                } else if (value.contains(".")) {
+                    map.put(key, Double.parseDouble(value));
+                } else {
+                    map.put(key, Integer.parseInt(value));
+                }
             }
 
             return map;
