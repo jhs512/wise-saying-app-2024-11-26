@@ -5,12 +5,12 @@ import com.ll.domain.wiseSaying.entity.WiseSaying;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class WiseSayingRepository {
-    public abstract WiseSaying save(WiseSaying wiseSaying);
+public interface WiseSayingRepository {
+    WiseSaying save(WiseSaying wiseSaying);
 
-    public abstract List<WiseSaying> findAll();
+    List<WiseSaying> findAll();
 
-    public abstract boolean deleteById(int id);
+    boolean deleteById(int id);
 
-    public abstract Optional<WiseSaying> findById(int id);
+    Optional<WiseSaying> findById(int id);
 }

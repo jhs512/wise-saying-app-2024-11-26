@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class WiseSayingFileRepository extends WiseSayingRepository {
+public class WiseSayingFileRepository implements WiseSayingRepository {
     private final List<WiseSaying> wiseSayings;
     private int lastId;
 
