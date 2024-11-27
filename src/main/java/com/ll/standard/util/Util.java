@@ -23,5 +23,25 @@ public class Util {
             Path path = Paths.get(filePath);
             return Files.exists(path);
         }
+
+        public static void set(String filePath, String content) {
+            Path path = Paths.get(filePath);
+
+            try {
+                Files.writeString(path, content, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public static String get(String filePath, String defaultValue) {
+            Path path = Paths.get(filePath);
+
+            try {
+                return Files.readString(path);
+            } catch (IOException e) {
+                return defaultValue;
+            }
+        }
     }
 }
