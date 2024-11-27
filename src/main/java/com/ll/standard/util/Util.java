@@ -21,7 +21,22 @@ public class Util {
             try {
                 Files.writeString(path, content, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                final Path parentDir = path.getParent();
+                if (parentDir != null && Files.notExists(parentDir)) {
+                    try {
+                        Files.createDirectories(parentDir);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    try {
+                        Files.writeString(path, content, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } else {
+                    throw new RuntimeException(e);
+                }
             }
         }
 
