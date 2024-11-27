@@ -129,7 +129,7 @@ public class JsonUtilTest {
                 {
                     "name": "이름",
                 }
-                """;
+                """.stripIndent().trim();
 
         // when
         Map<String, Object> map = Util.json.toMap(jsonStr);
