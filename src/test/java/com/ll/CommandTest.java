@@ -28,4 +28,16 @@ public class CommandTest {
         Command cmd = new Command("삭제?id=10");
         assertThat(cmd.getParam("number", "-")).isEqualTo("-");
     }
+
+    @Test
+    public void t5() {
+        Command cmd = new Command("삭제?id=10");
+        assertThat(cmd.getParamAsInt("id", 0)).isEqualTo(10);
+    }
+
+    @Test
+    public void t6() {
+        Command cmd = new Command("삭제?id=10");
+        assertThat(cmd.getParamAsInt("number", 0)).isEqualTo(0);
+    }
 }
