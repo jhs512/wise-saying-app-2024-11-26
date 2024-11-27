@@ -68,4 +68,12 @@ public class CommandTest {
         assertThat(cmd.getParamAsInt("number", 0)).isEqualTo(10);
         assertThat(cmd.getParam("name")).isEqualTo("Paul");
     }
+
+    @Test
+    @DisplayName("""
+            new Command("목록? ") does not throw Exception
+            """)
+    public void t8() {
+        Command cmd = new Command("목록? ");
+    }
 }
