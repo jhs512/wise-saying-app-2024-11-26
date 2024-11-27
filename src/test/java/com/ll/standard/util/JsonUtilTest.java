@@ -120,4 +120,21 @@ public class JsonUtilTest {
                 }
                 """.stripIndent().trim());
     }
+
+    @Test
+    @DisplayName("JSON to Map")
+    public void t6() {
+        // given
+        String jsonStr = """
+                {
+                    "name": "이름",
+                }
+                """;
+
+        // when
+        Map<String, Object> map = Util.json.toMap(jsonStr);
+
+        // then
+        assertThat(map).containsEntry("name", "이름");
+    }
 }
