@@ -98,5 +98,23 @@ public class WiseSayingControllerTest {
                 .contains("2 / 작자미상 / 과거에 집착하지 마라.")
                 .doesNotContain("1 / 작자미상 / 현재를 사랑하라.");
     }
+
+    @Test
+    @DisplayName("삭제 명령어 : 존재하지 않는 명언번호에 대한 처리")
+    public void t9() {
+        String output = AppTest.run("""
+                등록
+                현재를 사랑하라.
+                작자미상
+                등록
+                과거에 집착하지 마라.
+                작자미상
+                삭제?id=3
+                목록
+                """);
+
+        assertThat(output)
+                .contains("3번 명언은 존재하지 않습니다.");
+    }
 }
 
