@@ -51,6 +51,8 @@ public class AppTest {
         App app = new App(scanner);
         app.run();
 
+        scanner.close();
+
         String output = outputStream.toString();
 
         TestUtil.clearSetOutToByteArray(outputStream);
