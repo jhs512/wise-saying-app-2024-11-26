@@ -4,9 +4,7 @@ import com.ll.domain.wiseSaying.entity.WiseSaying;
 import com.ll.standard.util.Util;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -45,12 +43,13 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
 
     public List<WiseSaying> findAll() {
         try {
-            return Files.walk(Path.of(getTableDirPath()))
-                    .filter(Files::isRegularFile)
-                    .filter(path -> path.getFileName().toString().matches("\\d+\\.json"))
+            return Util.file.walkRegularFiles(
+                            getTableDirPath(),
+                            "\\d+\\.json"
+                    )
                     .map(path -> Util.file.get(path.toString(), ""))
-                    .map(jsonString -> Util.json.toMap(jsonString))
-                    .map(map -> new WiseSaying(map))
+                    .map(Util.json::toMap)
+                    .map(WiseSaying::new)
                     .toList();
         } catch (NoSuchFileException e) {
             return List.of();
