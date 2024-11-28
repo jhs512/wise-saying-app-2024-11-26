@@ -3,13 +3,15 @@ package com.ll.domain.wiseSaying.repository;
 import com.ll.domain.wiseSaying.entity.WiseSaying;
 import com.ll.standard.util.Util;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public class WiseSayingFileRepository implements WiseSayingRepository {
-    private final List<WiseSaying> wiseSayings;
     private int lastId;
 
     public static String getTableDirPath() {
@@ -20,17 +22,14 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
         return getTableDirPath() + "/" + id + ".json";
     }
 
-    public WiseSayingFileRepository() {
-        this.wiseSayings = new ArrayList<>();
-        this.lastId = 0;
-    }
-
     public WiseSaying save(WiseSaying wiseSaying) {
         if (!wiseSaying.isNew()) {
             return wiseSaying;
         }
 
-        wiseSaying.setId(++lastId);
+        wiseSaying.setId(
+                findAll().size() + 1
+        );
 
         Map<String, Object> wiseSayingMap = wiseSaying.toMap();
         String jsonStr = Util.json.toString(wiseSayingMap);
@@ -41,7 +40,19 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
     }
 
     public List<WiseSaying> findAll() {
-        return wiseSayings;
+        try {
+            return Files.walk(Path.of(getTableDirPath()))
+                    .filter(Files::isRegularFile)
+                    .filter(path -> path.getFileName().toString().matches("\\d+\\.json"))
+                    .map(path -> Util.file.get(path.toString(), ""))
+                    .map(jsonString -> Util.json.toMap(jsonString))
+                    .map(map -> new WiseSaying(map))
+                    .toList();
+        } catch (NoSuchFileException e) {
+            return List.of();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean deleteById(int id) {
