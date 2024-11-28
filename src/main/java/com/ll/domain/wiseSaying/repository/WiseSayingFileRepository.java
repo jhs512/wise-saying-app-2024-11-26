@@ -12,8 +12,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public class WiseSayingFileRepository implements WiseSayingRepository {
-    private int lastId;
-
     public static String getTableDirPath() {
         return "db/test/wiseSaying";
     }
