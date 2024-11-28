@@ -18,9 +18,9 @@ public class WiseSayingController {
     }
 
     public void actionAdd() {
-        System.out.println("명언 : ");
+        System.out.print("명언 : ");
         String content = scanner.nextLine();
-        System.out.println("작가 : ");
+        System.out.print("작가 : ");
         String author = scanner.nextLine();
 
         WiseSaying wiseSaying = wiseSayingService.add(content, author);
