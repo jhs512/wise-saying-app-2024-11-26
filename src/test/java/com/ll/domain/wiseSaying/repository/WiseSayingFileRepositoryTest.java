@@ -91,4 +91,22 @@ public class WiseSayingFileRepositoryTest {
                 lastId
         ).isEqualTo(wiseSaying1.getId());
     }
+
+    @Test
+    @DisplayName("명언 수정")
+    public void t6() {
+        WiseSaying wiseSaying = new WiseSaying(0, "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");
+        wiseSayingRepository.save(wiseSaying);
+
+        wiseSaying.setContent("나의 삶의 가치는 나의 결정에 달려있다.");
+        wiseSaying.setAuthor("아인슈타인");
+
+        wiseSayingRepository.save(wiseSaying);
+
+        Optional<WiseSaying> opWiseSaying = wiseSayingRepository.findById(wiseSaying.getId());
+
+        assertThat(
+                opWiseSaying.get()
+        ).isEqualTo(wiseSaying);
+    }
 }
