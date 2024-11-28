@@ -41,6 +41,9 @@ public class App {
                 case "수정":
                     wiseSyingController.actionModify(command);
                     break;
+                case "빌드":
+                    wiseSyingController.actionBuild();
+                    break;
             }
         }
     }

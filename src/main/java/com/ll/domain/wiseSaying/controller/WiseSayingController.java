@@ -1,8 +1,8 @@
 package com.ll.domain.wiseSaying.controller;
 
-import com.ll.global.app.Command;
 import com.ll.domain.wiseSaying.entity.WiseSaying;
 import com.ll.domain.wiseSaying.service.WiseSayingService;
+import com.ll.global.app.Command;
 
 import java.util.List;
 import java.util.Optional;
@@ -82,5 +82,11 @@ public class WiseSayingController {
         String author = scanner.nextLine();
 
         wiseSayingService.modify(wiseSaying, content, author);
+    }
+
+    public void actionBuild() {
+        wiseSayingService.build();
+
+        System.out.println("data.json 파일의 내용이 갱신되었습니다.");
     }
 }
