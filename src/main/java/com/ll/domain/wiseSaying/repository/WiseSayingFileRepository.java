@@ -22,6 +22,10 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
         return getTableDirPath() + "/lastId.txt";
     }
 
+    public static String getArchiveDirPath() {
+        return getTableDirPath() + "/data.json";
+    }
+
     public WiseSaying save(WiseSaying wiseSaying) {
         boolean isNew = wiseSaying.isNew();
 
@@ -86,5 +90,9 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
 
     public static void dropTable() {
         Util.file.rmdir(WiseSayingFileRepository.getTableDirPath());
+    }
+
+    public void archive(String archiveDirPath) {
+        Util.file.set(archiveDirPath, "");
     }
 }
