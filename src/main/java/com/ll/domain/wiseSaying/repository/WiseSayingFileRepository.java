@@ -23,20 +23,20 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
     }
 
     public WiseSaying save(WiseSaying wiseSaying) {
-        if (!wiseSaying.isNew()) {
-            return wiseSaying;
+        boolean isNew = wiseSaying.isNew();
+
+        if (isNew) {
+            wiseSaying.setId(getLastId() + 1);
         }
-
-        int id = getLastId() + 1;
-
-        wiseSaying.setId(id);
 
         Map<String, Object> wiseSayingMap = wiseSaying.toMap();
         String jsonStr = Util.json.toString(wiseSayingMap);
 
         Util.file.set(getRowFilePath(wiseSaying.getId()), jsonStr);
 
-        setLastId(id);
+        if (isNew) {
+            setLastId(wiseSaying.getId());
+        }
 
         return wiseSaying;
     }
