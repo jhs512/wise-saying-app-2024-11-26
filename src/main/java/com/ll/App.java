@@ -1,6 +1,6 @@
 package com.ll;
 
-import com.ll.domain.system.controller.SystemController.SystemController;
+import com.ll.domain.system.controller.SystemController;
 import com.ll.domain.wiseSaying.controller.WiseSayingController;
 
 import java.util.Scanner;
