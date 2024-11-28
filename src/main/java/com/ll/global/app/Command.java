@@ -1,4 +1,4 @@
-package com.ll;
+package com.ll.global.app;
 
 import java.util.HashMap;
 import java.util.Map;

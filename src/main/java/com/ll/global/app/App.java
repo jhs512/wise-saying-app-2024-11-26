@@ -1,4 +1,4 @@
-package com.ll;
+package com.ll.global.app;
 
 import com.ll.domain.system.controller.SystemController;
 import com.ll.domain.wiseSaying.controller.WiseSayingController;

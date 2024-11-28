@@ -1,5 +1,7 @@
 package com.ll;
 
+import com.ll.global.app.App;
+
 import java.util.Scanner;
 
 public class Main {

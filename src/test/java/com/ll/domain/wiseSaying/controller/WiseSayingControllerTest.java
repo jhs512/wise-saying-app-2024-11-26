@@ -1,15 +1,18 @@
 package com.ll.domain.wiseSaying.controller;
 
 import com.ll.AppTest;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.ll.global.app.AppConfig;
+import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class WiseSayingControllerTest {
+    @BeforeAll
+    public static void beforeAll() {
+        AppConfig.setTestMode();
+    }
+
     @BeforeEach
     public void beforeEach() {
         AppTest.dropTables();

@@ -1,7 +1,10 @@
 package com.ll;
 
 import com.ll.domain.wiseSaying.repository.WiseSayingFileRepository;
+import com.ll.global.app.App;
+import com.ll.global.app.AppConfig;
 import com.ll.standard.util.TestUtil;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +14,11 @@ import java.util.Scanner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AppTest {
+    @BeforeAll
+    public static void beforeAll() {
+        AppConfig.setTestMode();
+    }
+
     @Test
     @DisplayName("== 명언 앱 ==")
     public void t1() {
