@@ -16,13 +16,12 @@ public class WiseSayingFileRepositoryTest {
 
     @BeforeEach
     public void beforeEach() {
-        Util.file.rmdir("db");
-        Util.file.mkdir("db");
+        Util.file.rmdir(WiseSayingFileRepository.getTableDirPath());
     }
 
     @AfterEach
     public void afterEach() {
-        Util.file.rmdir("db");
+        Util.file.rmdir(WiseSayingFileRepository.getTableDirPath());
     }
 
     @Test
