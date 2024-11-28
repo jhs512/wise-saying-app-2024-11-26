@@ -112,4 +112,20 @@ public class WiseSayingFileRepositoryTest {
                 opWiseSaying.get()
         ).isEqualTo(wiseSaying);
     }
+
+    @Test
+    @DisplayName("빌드를 하면 data.json 파일이 생성된다.")
+    public void t7() {
+        WiseSaying wiseSaying1 = new WiseSaying(0, "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");
+        wiseSayingRepository.save(wiseSaying1);
+
+        WiseSaying wiseSaying2 = new WiseSaying(0, "나의 삶의 가치는 나의 결정에 달려있다.", "아인슈타인");
+        wiseSayingRepository.save(wiseSaying2);
+
+        wiseSayingRepository.archive(WiseSayingFileRepository.getArchiveDirPath());
+
+        assertThat(
+                Util.file.exists(WiseSayingFileRepository.getArchiveDirPath())
+        ).isTrue();
+    }
 }
