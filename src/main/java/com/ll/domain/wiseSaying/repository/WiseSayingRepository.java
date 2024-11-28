@@ -15,4 +15,6 @@ public interface WiseSayingRepository {
     Optional<WiseSaying> findById(int id);
 
     void archive(String archiveDirPath);
+
+    List<WiseSaying> findByKeyword(String keywordType, String keyword);
 }

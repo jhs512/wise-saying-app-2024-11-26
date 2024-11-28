@@ -26,6 +26,7 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
         return getTableDirPath() + "/data.json";
     }
 
+    @Override
     public WiseSaying save(WiseSaying wiseSaying) {
         boolean isNew = wiseSaying.isNew();
 
@@ -44,6 +45,7 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
         return wiseSaying;
     }
 
+    @Override
     public List<WiseSaying> findAll() {
         try {
             return Util.file.walkRegularFiles(
@@ -60,10 +62,12 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
         }
     }
 
+    @Override
     public boolean deleteById(int id) {
         return Util.file.delete(getRowFilePath(id));
     }
 
+    @Override
     public Optional<WiseSaying> findById(int id) {
         String filePath = getRowFilePath(id);
 
@@ -92,6 +96,7 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
         Util.file.rmdir(WiseSayingFileRepository.getTableDirPath());
     }
 
+    @Override
     public void archive(String archiveDirPath) {
         String jsonStr = Util.json.toString(
                 findAll()
@@ -101,5 +106,23 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
         );
 
         Util.file.set(archiveDirPath, jsonStr);
+    }
+
+    @Override
+    public List<WiseSaying> findByKeyword(String keywordType, String keyword) {
+        return findAll()
+                .stream()
+                .filter(wiseSaying -> {
+                    if (keywordType.equals("content")) {
+                        return wiseSaying.getContent().contains(keyword);
+                    }
+
+                    if (keywordType.equals("author")) {
+                        return wiseSaying.getAuthor().contains(keyword);
+                    }
+
+                    return false;
+                })
+                .toList();
     }
 }

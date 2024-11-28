@@ -33,7 +33,7 @@ public class App {
                     wiseSyingController.actionAdd();
                     break;
                 case "목록":
-                    wiseSyingController.actionList();
+                    wiseSyingController.actionList(command);
                     break;
                 case "삭제":
                     wiseSyingController.actionDelete(command);

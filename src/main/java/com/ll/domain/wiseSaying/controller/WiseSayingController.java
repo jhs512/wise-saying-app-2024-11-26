@@ -28,11 +28,23 @@ public class WiseSayingController {
         System.out.println(wiseSaying.getId() + "번 명언이 등록되었습니다.");
     }
 
-    public void actionList() {
+    public void actionList(Command command) {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
-        List<WiseSaying> wiseSayings = wiseSayingService.findAll();
+        List<WiseSaying> wiseSayings = null;
+
+        if ( command.getParam("keyword", "").isEmpty() )
+        {
+            wiseSayings = wiseSayingService.findAll();
+        }
+        else
+        {
+            String keyword = command.getParam("keyword", "");
+            String keywordType = command.getParam("keywordType", "content");
+
+            wiseSayings = wiseSayingService.findByKeyword(keywordType, keyword);
+        }
 
         for (WiseSaying wiseSaying : wiseSayings.reversed()) {
             System.out.println(wiseSaying.getId() + " / " + wiseSaying.getAuthor() + " / " + wiseSaying.getContent());

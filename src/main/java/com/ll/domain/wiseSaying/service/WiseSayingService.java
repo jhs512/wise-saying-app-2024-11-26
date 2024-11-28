@@ -44,4 +44,8 @@ public class WiseSayingService {
     public void build() {
         wiseSayingRepository.archive(WiseSayingFileRepository.getArchiveDirPath());
     }
+
+    public List<WiseSaying> findByKeyword(String keywordType, String keyword) {
+        return wiseSayingRepository.findByKeyword(keywordType, keyword);
+    }
 }
