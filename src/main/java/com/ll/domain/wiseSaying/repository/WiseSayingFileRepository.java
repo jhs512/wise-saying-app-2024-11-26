@@ -93,6 +93,27 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
     }
 
     public void archive(String archiveDirPath) {
-        Util.file.set(archiveDirPath, "");
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("[\n");
+
+        List<WiseSaying> wiseSayings = findAll();
+
+        wiseSayings.forEach(wiseSaying -> {
+            String wiseSayingJsonStr = wiseSaying.toJsonStr();
+
+            wiseSayingJsonStr = "    " + wiseSayingJsonStr.replace("\n", "\n    ");
+
+            sb.append(wiseSayingJsonStr);
+            sb.append(",\n");
+        });
+
+        if (!wiseSayings.isEmpty()) {
+            sb.delete(sb.length() - 2, sb.length());
+        }
+
+        sb.append("\n]");
+
+        Util.file.set(archiveDirPath, sb.toString());
     }
 }
