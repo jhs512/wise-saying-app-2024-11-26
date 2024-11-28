@@ -171,5 +171,22 @@ public class WiseSayingControllerTest {
         assertThat(output)
                 .contains("2 / 홍길동 / 현재와 자신을 사랑하라.");
     }
+
+    @Test
+    @DisplayName("빌드 명령어 : data.json 생성")
+    public void t12() {
+        String output = AppTest.run("""
+                등록
+                현재를 사랑하라.
+                작자미상
+                등록
+                과거에 집착하지 마라.
+                작자미상
+                빌드
+                """);
+
+        assertThat(output)
+                .contains("data.json 파일의 내용이 갱신되었습니다.");
+    }
 }
 
