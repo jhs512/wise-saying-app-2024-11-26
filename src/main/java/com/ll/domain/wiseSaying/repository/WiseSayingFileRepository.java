@@ -7,6 +7,7 @@ import com.ll.standard.util.Util;
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class WiseSayingFileRepository implements WiseSayingRepository {
@@ -93,27 +94,11 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
     }
 
     public void archive(String archiveDirPath) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("[\n");
-
         List<WiseSaying> wiseSayings = findAll();
+        List<Map<String, Object>> mapList = wiseSayings.stream().map(WiseSaying::toMap).toList();
 
-        wiseSayings.forEach(wiseSaying -> {
-            String wiseSayingJsonStr = wiseSaying.toJsonStr();
+        String jsonStr = Util.json.toString(mapList);
 
-            wiseSayingJsonStr = "    " + wiseSayingJsonStr.replace("\n", "\n    ");
-
-            sb.append(wiseSayingJsonStr);
-            sb.append(",\n");
-        });
-
-        if (!wiseSayings.isEmpty()) {
-            sb.delete(sb.length() - 2, sb.length());
-        }
-
-        sb.append("\n]");
-
-        Util.file.set(archiveDirPath, sb.toString());
+        Util.file.set(archiveDirPath, jsonStr);
     }
 }
