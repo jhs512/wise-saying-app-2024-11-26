@@ -128,4 +128,35 @@ public class WiseSayingFileRepositoryTest {
                 Util.file.exists(WiseSayingFileRepository.getArchiveDirPath())
         ).isTrue();
     }
+
+    @Test
+    @DisplayName("빌드 시 생성되는 data.json은 배열의 형태이다.")
+    public void t8() {
+        WiseSaying wiseSaying1 = new WiseSaying(0, "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");
+        wiseSayingRepository.save(wiseSaying1);
+
+        WiseSaying wiseSaying2 = new WiseSaying(0, "나의 삶의 가치는 나의 결정에 달려있다.", "아인슈타인");
+        wiseSayingRepository.save(wiseSaying2);
+
+        wiseSayingRepository.archive(WiseSayingFileRepository.getArchiveDirPath());
+
+        String jsonStr = Util.file.get(WiseSayingFileRepository.getArchiveDirPath(), "");
+
+        assertThat(
+                jsonStr
+        ).isEqualTo("""
+                [
+                    {
+                        "id": 1,
+                        "content": "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.",
+                        "author": "괴테"
+                    },
+                    {
+                        "id": 2,
+                        "content": "나의 삶의 가치는 나의 결정에 달려있다.",
+                        "author": "아인슈타인"
+                    }
+                ]
+                """.stripIndent().trim());
+    }
 }
