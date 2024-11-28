@@ -23,6 +23,10 @@ public class Util {
             return !exists(filePath);
         }
 
+        public static void set(String filePath, int content) {
+            set(filePath, String.valueOf(content));
+        }
+
         public static void set(String filePath, String content) {
             Path path = getPath(filePath);
             try {
@@ -37,6 +41,34 @@ public class Util {
                 return Files.readString(getPath(filePath));
             } catch (IOException e) {
                 return defaultValue;
+            }
+        }
+
+        public static int getAsInt(String filePath, int defaultValue) {
+            String content = get(filePath, "");
+
+            if (content.isBlank()) {
+                return defaultValue;
+            }
+
+            try {
+                return Integer.parseInt(content);
+            } catch (NumberFormatException e) {
+                return defaultValue;
+            }
+        }
+
+        private static class FileDeleteVisitor extends SimpleFileVisitor<Path> {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                Files.delete(file);
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                Files.delete(dir);
+                return FileVisitResult.CONTINUE;
             }
         }
 
@@ -84,20 +116,6 @@ public class Util {
             } else {
                 throw new RuntimeException("파일 접근 실패: " + path, e);
             }
-        }
-    }
-
-    private static class FileDeleteVisitor extends SimpleFileVisitor<Path> {
-        @Override
-        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-            Files.delete(file);
-            return FileVisitResult.CONTINUE;
-        }
-
-        @Override
-        public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-            Files.delete(dir);
-            return FileVisitResult.CONTINUE;
         }
     }
 
