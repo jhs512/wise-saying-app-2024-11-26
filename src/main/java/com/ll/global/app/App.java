@@ -47,4 +47,8 @@ public class App {
             }
         }
     }
+
+    public void makeSampleData(int items) {
+        wiseSyingController.makeSampleData(items);
+    }
 }

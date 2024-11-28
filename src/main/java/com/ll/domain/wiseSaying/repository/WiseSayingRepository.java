@@ -17,4 +17,6 @@ public interface WiseSayingRepository {
     void archive(String archiveDirPath);
 
     List<WiseSaying> findByKeyword(String keywordType, String keyword);
+
+    void makeSampleData(int items);
 }

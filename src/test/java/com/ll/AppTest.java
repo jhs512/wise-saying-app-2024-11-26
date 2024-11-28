@@ -71,4 +71,9 @@ public class AppTest {
     public static void dropTables() {
         WiseSayingFileRepository.dropTable();
     }
+
+    public static void makeSampleData(int items) {
+        App app = new App(null);
+        app.makeSampleData(items);
+    }
 }

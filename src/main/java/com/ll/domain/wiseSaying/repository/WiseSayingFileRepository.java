@@ -125,4 +125,11 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
                 })
                 .toList();
     }
+
+    @Override
+    public void makeSampleData(int items) {
+        for (int i = 1; i <= items; i++) {
+            save(new WiseSaying(0, "명언 " + i, "작자미상"));
+        }
+    }
 }

@@ -48,4 +48,8 @@ public class WiseSayingService {
     public List<WiseSaying> findByKeyword(String keywordType, String keyword) {
         return wiseSayingRepository.findByKeyword(keywordType, keyword);
     }
+
+    public void makeSampleData(int items) {
+        wiseSayingRepository.makeSampleData(items);
+    }
 }
