@@ -6,7 +6,6 @@ import com.ll.standard.dto.Pageable;
 import com.ll.standard.util.Util;
 import lombok.SneakyThrows;
 
-import java.nio.file.NoSuchFileException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -50,18 +49,14 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
     @SneakyThrows
     @Override
     public List<WiseSaying> findAll() {
-        try {
-            return Util.file.walkRegularFiles(
-                            getTableDirPath(),
-                            "\\d+\\.json"
-                    )
-                    .map(path -> Util.file.get(path.toString(), ""))
-                    .map(WiseSaying::new)
-                    .sorted(Comparator.comparingInt(WiseSaying::getId).reversed()) // id 순 역순정렬
-                    .toList();
-        } catch (NoSuchFileException e) {
-            return List.of();
-        }
+        return Util.file.walkRegularFiles(
+                        getTableDirPath(),
+                        "\\d+\\.json"
+                )
+                .map(path -> Util.file.get(path.toString(), ""))
+                .map(WiseSaying::new)
+                .sorted(Comparator.comparingInt(WiseSaying::getId).reversed()) // id 순 역순정렬
+                .toList();
     }
 
     @Override

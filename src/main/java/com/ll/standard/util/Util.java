@@ -1,5 +1,7 @@
 package com.ll.standard.util;
 
+import lombok.SneakyThrows;
+
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -120,10 +122,15 @@ public class Util {
             }
         }
 
-        public static Stream<Path> walkRegularFiles(String dirPath, String fileNameRegex) throws IOException {
-            return Files.walk(Path.of(dirPath))
-                    .filter(Files::isRegularFile)
-                    .filter(path -> path.getFileName().toString().matches(fileNameRegex));
+        @SneakyThrows
+        public static Stream<Path> walkRegularFiles(String dirPath, String fileNameRegex) {
+            try {
+                return Files.walk(Path.of(dirPath))
+                        .filter(Files::isRegularFile)
+                        .filter(path -> path.getFileName().toString().matches(fileNameRegex));
+            } catch (NoSuchFileException e) {
+                return Stream.empty();
+            }
         }
     }
 

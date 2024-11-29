@@ -3,6 +3,7 @@ package com.ll.domain.wiseSaying.service;
 import com.ll.domain.wiseSaying.entity.WiseSaying;
 import com.ll.domain.wiseSaying.repository.WiseSayingFileRepository;
 import com.ll.domain.wiseSaying.repository.WiseSayingRepository;
+import com.ll.standard.dto.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -51,5 +52,13 @@ public class WiseSayingService {
 
     public void makeSampleData(int items) {
         wiseSayingRepository.makeSampleData(items);
+    }
+
+    public Pageable<WiseSaying> pageableAll(int itemsPerPage, int page) {
+        return wiseSayingRepository.pageableAll(itemsPerPage, page);
+    }
+
+    public Pageable<WiseSaying> pageable(String keywordType, String keyword, int itemsPerPage, int page) {
+        return wiseSayingRepository.pageable(keywordType, keyword, itemsPerPage, page);
     }
 }

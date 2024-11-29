@@ -3,8 +3,8 @@ package com.ll.domain.wiseSaying.controller;
 import com.ll.domain.wiseSaying.entity.WiseSaying;
 import com.ll.domain.wiseSaying.service.WiseSayingService;
 import com.ll.global.app.Command;
+import com.ll.standard.dto.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -32,21 +32,18 @@ public class WiseSayingController {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
-        List<WiseSaying> wiseSayings = null;
+        String keyword = command.getParam("keyword", "");
+        String keywordType = command.getParam("keywordType", "content");
+        int itemsPerPage = 5;
+        int page = command.getParamAsInt("page", 1);
 
-        if ( command.getParam("keyword", "").isEmpty() )
-        {
-            wiseSayings = wiseSayingService.findAll();
-        }
-        else
-        {
-            String keyword = command.getParam("keyword", "");
-            String keywordType = command.getParam("keywordType", "content");
+        boolean hasKeyword = !keyword.isBlank();
 
-            wiseSayings = wiseSayingService.findByKeyword(keywordType, keyword);
-        }
+        Pageable<WiseSaying> pageable = hasKeyword
+                ? wiseSayingService.pageable(keywordType, keyword, itemsPerPage, page)
+                : wiseSayingService.pageableAll(itemsPerPage, page);
 
-        for (WiseSaying wiseSaying : wiseSayings.reversed()) {
+        for (WiseSaying wiseSaying : pageable.getContent()) {
             System.out.println(wiseSaying.getId() + " / " + wiseSaying.getAuthor() + " / " + wiseSaying.getContent());
         }
     }

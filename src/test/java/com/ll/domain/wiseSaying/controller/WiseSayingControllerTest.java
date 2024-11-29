@@ -217,10 +217,10 @@ public class WiseSayingControllerTest {
                 """);
 
         assertThat(output)
-                .contains("1 / 작자미상 / 명언 1")
-                .contains("5 / 작자미상 / 명언 5")
-                .doesNotContain("6 / 작자미상 / 명언 6")
-                .doesNotContain("10 / 작자미상 / 명언 10");
+                .contains("10 / 작자미상 / 명언 10")
+                .contains("6 / 작자미상 / 명언 6")
+                .doesNotContain("5 / 작자미상 / 명언 5")
+                .doesNotContain("1 / 작자미상 / 명언 1");
     }
 }
 
