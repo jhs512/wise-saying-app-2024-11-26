@@ -135,6 +135,14 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
 
     @Override
     public int count() {
-        return findAll().size();
+        try {
+            return (int) Util.file.walkRegularFiles(
+                            getTableDirPath(),
+                            "\\d+\\.json"
+                    )
+                    .count();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
