@@ -271,6 +271,12 @@ public class WiseSayingFileRepositoryTest {
         assertThat(pageable.getPage())
                 .isEqualTo(1);
 
+        assertThat(pageable.getKeywordType())
+                .isEqualTo("content");
+
+        assertThat(pageable.getKeyword())
+                .isEqualTo("다");
+
         assertThat(pageable.getContent())
                 .containsExactlyInAnyOrder(wiseSaying3, wiseSaying2);
     }

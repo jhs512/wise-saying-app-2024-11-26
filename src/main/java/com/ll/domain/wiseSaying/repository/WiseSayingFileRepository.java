@@ -219,6 +219,8 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
                 .totalPages(totalPages(totalItems, itemsPerPage))
                 .itemsPerPage(itemsPerPage)
                 .page(page)
+                .keywordType(keywordType)
+                .keyword(keyword)
                 .content(content)
                 .build();
     }

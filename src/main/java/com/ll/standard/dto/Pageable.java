@@ -12,5 +12,7 @@ public class Pageable<T> {
     private int totalPages;
     private int itemsPerPage;
     private int page;
+    private String keywordType;
+    private String keyword;
     private List<T> content;
 }
