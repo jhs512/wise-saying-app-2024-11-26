@@ -1,12 +1,12 @@
 package com.ll.standard.dto;
 
 import com.ll.domain.wiseSaying.entity.WiseSaying;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
 
-@AllArgsConstructor
+@Builder
 @Getter
 public class Pageable {
     private int totalItems;

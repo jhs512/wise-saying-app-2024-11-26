@@ -161,6 +161,10 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
                 .limit(itemsPerPage)
                 .toList();
 
-        return new Pageable(totalItems, content);
+        return Pageable
+                .builder()
+                .totalItems(totalItems)
+                .content(content)
+                .build();
     }
 }
