@@ -170,11 +170,6 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
     }
 
     @Override
-    public int totalPages(int totalItems, int itemsPerPage) {
-        return (int) Math.ceil((double) totalItems / itemsPerPage);
-    }
-
-    @Override
     public Pageable<WiseSaying> pageableAll(int itemsPerPage, int page) {
         int totalItems = count();
 
@@ -186,7 +181,6 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
 
         return Pageable.<WiseSaying>builder()
                 .totalItems(totalItems)
-                .totalPages(totalPages(totalItems, itemsPerPage))
                 .itemsPerPage(itemsPerPage)
                 .page(page)
                 .content(content)
@@ -216,7 +210,6 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
 
         return Pageable.<WiseSaying>builder()
                 .totalItems(totalItems)
-                .totalPages(totalPages(totalItems, itemsPerPage))
                 .itemsPerPage(itemsPerPage)
                 .page(page)
                 .keywordType(keywordType)

@@ -176,25 +176,6 @@ public class WiseSayingFileRepositoryTest {
     }
 
     @Test
-    @DisplayName("페이징 : totalPages")
-    public void t10() {
-        WiseSaying wiseSaying1 = new WiseSaying(0, "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");
-        wiseSayingRepository.save(wiseSaying1);
-
-        WiseSaying wiseSaying2 = new WiseSaying(0, "나의 삶의 가치는 나의 결정에 달려있다.", "아인슈타인");
-        wiseSayingRepository.save(wiseSaying2);
-
-        WiseSaying wiseSaying3 = new WiseSaying(0, "삶이 있는 한 희망은 있다.", "톨스토이");
-        wiseSayingRepository.save(wiseSaying3);
-
-        int totalItems = wiseSayingRepository.count();
-        int itemsPerPage = 2;
-        int totalPages = wiseSayingRepository.totalPages(totalItems, itemsPerPage);
-
-        assertThat(totalPages).isEqualTo(2);
-    }
-
-    @Test
     @DisplayName("페이징 : Pageable")
     public void t11() {
         WiseSaying wiseSaying1 = new WiseSaying(0, "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");

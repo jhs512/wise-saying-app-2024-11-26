@@ -25,8 +25,6 @@ public interface WiseSayingRepository {
 
     int count(String keywordType, String keyword);
 
-    int totalPages(int totalItems, int itemsPerPage);
-
     Pageable<WiseSaying> pageableAll(int itemsPerPage, int page);
 
     Pageable<WiseSaying> pageable(String keywordType, String keyword, int itemsPerPage, int page);

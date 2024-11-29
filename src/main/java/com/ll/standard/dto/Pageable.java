@@ -5,7 +5,6 @@ import lombok.Getter;
 
 import java.util.List;
 
-@Builder
 @Getter
 public class Pageable<T> {
     private int totalItems;
@@ -15,4 +14,15 @@ public class Pageable<T> {
     private String keywordType;
     private String keyword;
     private List<T> content;
+
+    @Builder
+    public Pageable(int totalItems, int itemsPerPage, int page, String keywordType, String keyword, List<T> content) {
+        this.totalItems = totalItems;
+        this.itemsPerPage = itemsPerPage;
+        this.page = page;
+        this.keywordType = keywordType;
+        this.keyword = keyword;
+        this.content = content;
+        this.totalPages = (int) Math.ceil((double) totalItems / itemsPerPage);
+    }
 }
