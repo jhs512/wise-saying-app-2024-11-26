@@ -208,7 +208,7 @@ public class WiseSayingControllerTest {
     }
 
     @Test
-    @DisplayName("목록(페이징) : 샘플데이터 생성")
+    @DisplayName("목록(페이징) : page=1")
     public void t14() {
         AppTest.makeSampleData(10);
 
@@ -221,6 +221,54 @@ public class WiseSayingControllerTest {
                 .contains("6 / 작자미상 / 명언 6")
                 .doesNotContain("5 / 작자미상 / 명언 5")
                 .doesNotContain("1 / 작자미상 / 명언 1");
+    }
+
+    @Test
+    @DisplayName("목록(페이징) : page=2")
+    public void t15() {
+        AppTest.makeSampleData(10);
+
+        String output = AppTest.run("""
+                목록?page=2
+                """);
+
+        assertThat(output)
+                .doesNotContain("10 / 작자미상 / 명언 10")
+                .doesNotContain("6 / 작자미상 / 명언 6")
+                .contains("5 / 작자미상 / 명언 5")
+                .contains("1 / 작자미상 / 명언 1");
+    }
+
+    @Test
+    @DisplayName("목록?page=2&keywordType=content&keyword=명언")
+    public void t16() {
+        AppTest.makeSampleData(10);
+
+        String output = AppTest.run("""
+                목록?page=2&keywordType=content&keyword=명언
+                """);
+
+        assertThat(output)
+                .doesNotContain("10 / 작자미상 / 명언 10")
+                .doesNotContain("6 / 작자미상 / 명언 6")
+                .contains("5 / 작자미상 / 명언 5")
+                .contains("1 / 작자미상 / 명언 1");
+    }
+
+    @Test
+    @DisplayName("목록?page=1&keywordType=content&keyword=1")
+    public void t17() {
+        AppTest.makeSampleData(10);
+
+        String output = AppTest.run("""
+                목록?page=1&keywordType=content&keyword=1
+                """);
+
+        assertThat(output)
+                .contains("10 / 작자미상 / 명언 10")
+                .doesNotContain("9 / 작자미상 / 명언 9")
+                .doesNotContain("2 / 작자미상 / 명언 2")
+                .contains("1 / 작자미상 / 명언 1");
     }
 }
 
