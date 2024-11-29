@@ -225,7 +225,8 @@ public class WiseSayingControllerTest {
                 .contains("10 / 작자미상 / 명언 10")
                 .contains("6 / 작자미상 / 명언 6")
                 .doesNotContain("5 / 작자미상 / 명언 5")
-                .doesNotContain("1 / 작자미상 / 명언 1");
+                .doesNotContain("1 / 작자미상 / 명언 1")
+                .contains("페이지 : [1] 2");
     }
 
     @Test
@@ -241,7 +242,8 @@ public class WiseSayingControllerTest {
                 .doesNotContain("10 / 작자미상 / 명언 10")
                 .doesNotContain("6 / 작자미상 / 명언 6")
                 .contains("5 / 작자미상 / 명언 5")
-                .contains("1 / 작자미상 / 명언 1");
+                .contains("1 / 작자미상 / 명언 1")
+                .contains("페이지 : 1 [2]");
     }
 
     @Test
@@ -257,7 +259,8 @@ public class WiseSayingControllerTest {
                 .doesNotContain("10 / 작자미상 / 명언 10")
                 .doesNotContain("6 / 작자미상 / 명언 6")
                 .contains("5 / 작자미상 / 명언 5")
-                .contains("1 / 작자미상 / 명언 1");
+                .contains("1 / 작자미상 / 명언 1")
+                .contains("페이지 : 1 [2]");
     }
 
     @Test
@@ -273,7 +276,8 @@ public class WiseSayingControllerTest {
                 .contains("10 / 작자미상 / 명언 10")
                 .doesNotContain("9 / 작자미상 / 명언 9")
                 .doesNotContain("2 / 작자미상 / 명언 2")
-                .contains("1 / 작자미상 / 명언 1");
+                .contains("1 / 작자미상 / 명언 1")
+                .contains("페이지 : [1]");
     }
 }
 
