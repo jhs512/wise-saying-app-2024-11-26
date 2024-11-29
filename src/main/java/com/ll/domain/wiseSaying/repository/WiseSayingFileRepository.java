@@ -2,6 +2,7 @@ package com.ll.domain.wiseSaying.repository;
 
 import com.ll.domain.wiseSaying.entity.WiseSaying;
 import com.ll.global.app.AppConfig;
+import com.ll.standard.dto.Pageable;
 import com.ll.standard.util.Util;
 import lombok.SneakyThrows;
 
@@ -151,11 +152,15 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
     }
 
     @Override
-    public List<WiseSaying> pageableAll(int itemsPerPage, int page) {
-        return findAll()
+    public Pageable pageableAll(int itemsPerPage, int page) {
+        int totalItems = count();
+
+        List<WiseSaying> content = findAll()
                 .stream()
                 .skip((long) (page - 1) * itemsPerPage)
                 .limit(itemsPerPage)
                 .toList();
+
+        return new Pageable(totalItems, content);
     }
 }

@@ -1,6 +1,7 @@
 package com.ll.domain.wiseSaying.repository;
 
 import com.ll.domain.wiseSaying.entity.WiseSaying;
+import com.ll.standard.dto.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,5 +25,5 @@ public interface WiseSayingRepository {
 
     int totalPages(int itemsPerPage);
 
-    List<WiseSaying> pageableAll(int itemsPerPage, int page);
+    Pageable pageableAll(int itemsPerPage, int page);
 }
