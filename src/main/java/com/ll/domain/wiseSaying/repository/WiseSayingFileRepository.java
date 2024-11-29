@@ -146,6 +146,29 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
                 .count();
     }
 
+    @SneakyThrows
+    @Override
+    public int count(String keywordType, String keyword) {
+        return (int) Util.file.walkRegularFiles(
+                        getTableDirPath(),
+                        "\\d+\\.json"
+                )
+                .map(path -> Util.file.get(path.toString(), ""))
+                .map(WiseSaying::new)
+                .filter(wiseSaying -> {
+                    if (keywordType.equals("content")) {
+                        return wiseSaying.getContent().contains(keyword);
+                    }
+
+                    if (keywordType.equals("author")) {
+                        return wiseSaying.getAuthor().contains(keyword);
+                    }
+
+                    return false;
+                })
+                .count();
+    }
+
     @Override
     public int totalPages(int totalItems, int itemsPerPage) {
         return (int) Math.ceil((double) totalItems / itemsPerPage);
