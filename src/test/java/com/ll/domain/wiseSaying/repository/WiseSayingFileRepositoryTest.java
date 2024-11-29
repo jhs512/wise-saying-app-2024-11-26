@@ -175,7 +175,7 @@ public class WiseSayingFileRepositoryTest {
     }
 
     @Test
-    @DisplayName("페이징 : ")
+    @DisplayName("페이징 : totalPages")
     public void t10() {
         WiseSaying wiseSaying1 = new WiseSaying(0, "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");
         wiseSayingRepository.save(wiseSaying1);
@@ -189,7 +189,7 @@ public class WiseSayingFileRepositoryTest {
         int page = 1;
         int itemsPerPage = 2;
         int totalItems = wiseSayingRepository.count();
-        int totalPages = totalItems / itemsPerPage;
+        int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage);
 
         assertThat(totalPages).isEqualTo(2);
     }
