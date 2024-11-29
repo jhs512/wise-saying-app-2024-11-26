@@ -21,4 +21,6 @@ public interface WiseSayingRepository {
     void makeSampleData(int items);
 
     int count();
+
+    int totalPages(int itemsPerPage);
 }

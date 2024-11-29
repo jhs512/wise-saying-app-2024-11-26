@@ -186,10 +186,8 @@ public class WiseSayingFileRepositoryTest {
         WiseSaying wiseSaying3 = new WiseSaying(0, "삶이 있는 한 희망은 있다.", "톨스토이");
         wiseSayingRepository.save(wiseSaying3);
 
-        int page = 1;
         int itemsPerPage = 2;
-        int totalItems = wiseSayingRepository.count();
-        int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage);
+        int totalPages = wiseSayingRepository.totalPages(itemsPerPage);
 
         assertThat(totalPages).isEqualTo(2);
     }

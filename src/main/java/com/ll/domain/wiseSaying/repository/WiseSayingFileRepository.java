@@ -141,4 +141,9 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
                 )
                 .count();
     }
+
+    @Override
+    public int totalPages(int itemsPerPage) {
+        return (int) Math.ceil((double) count() / itemsPerPage);
+    }
 }
