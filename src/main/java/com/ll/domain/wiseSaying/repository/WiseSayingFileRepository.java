@@ -132,4 +132,9 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
             save(new WiseSaying(0, "명언 " + i, "작자미상"));
         }
     }
+
+    @Override
+    public int count() {
+        return findAll().size();
+    }
 }
