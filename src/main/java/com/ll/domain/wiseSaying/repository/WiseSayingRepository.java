@@ -25,5 +25,5 @@ public interface WiseSayingRepository {
 
     int totalPages(int totalItems, int itemsPerPage);
 
-    Pageable pageableAll(int itemsPerPage, int page);
+    Pageable<WiseSaying> pageableAll(int itemsPerPage, int page);
 }

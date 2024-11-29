@@ -208,7 +208,7 @@ public class WiseSayingFileRepositoryTest {
 
         int page = 1;
         int itemsPerPage = 2;
-        Pageable pageable = wiseSayingRepository.pageableAll(itemsPerPage, page);
+        Pageable<WiseSaying> pageable = wiseSayingRepository.pageableAll(itemsPerPage, page);
 
         assertThat(pageable.getTotalItems())
                 .isEqualTo(3);

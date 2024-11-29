@@ -152,7 +152,7 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
     }
 
     @Override
-    public Pageable pageableAll(int itemsPerPage, int page) {
+    public Pageable<WiseSaying> pageableAll(int itemsPerPage, int page) {
         int totalItems = count();
 
         List<WiseSaying> content = findAll()
@@ -161,11 +161,10 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
                 .limit(itemsPerPage)
                 .toList();
 
-        return Pageable
-                .builder()
+        return Pageable.<WiseSaying>builder()
                 .totalItems(totalItems)
-                .itemsPerPage(itemsPerPage)
                 .totalPages(totalPages(totalItems, itemsPerPage))
+                .itemsPerPage(itemsPerPage)
                 .page(page)
                 .content(content)
                 .build();
