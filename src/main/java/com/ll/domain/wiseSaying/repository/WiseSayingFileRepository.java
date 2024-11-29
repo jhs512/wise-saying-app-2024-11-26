@@ -6,6 +6,7 @@ import com.ll.standard.util.Util;
 import lombok.SneakyThrows;
 
 import java.nio.file.NoSuchFileException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,6 +56,7 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
                     )
                     .map(path -> Util.file.get(path.toString(), ""))
                     .map(WiseSaying::new)
+                    .sorted(Comparator.comparingInt(WiseSaying::getId).reversed()) // id 순 역순정렬
                     .toList();
         } catch (NoSuchFileException e) {
             return List.of();
@@ -100,6 +102,7 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
         String jsonStr = Util.json.toString(
                 findAll()
                         .stream()
+                        .sorted(Comparator.comparingInt(WiseSaying::getId)) // id 오름차순 정렬
                         .map(WiseSaying::toMap)
                         .toList()
         );
@@ -145,5 +148,14 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
     @Override
     public int totalPages(int itemsPerPage) {
         return (int) Math.ceil((double) count() / itemsPerPage);
+    }
+
+    @Override
+    public List<WiseSaying> pageableAll(int itemsPerPage, int page) {
+        return findAll()
+                .stream()
+                .skip((long) (page - 1) * itemsPerPage)
+                .limit(itemsPerPage)
+                .toList();
     }
 }
