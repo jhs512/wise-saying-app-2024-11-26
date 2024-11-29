@@ -2,10 +2,10 @@ package com.ll.domain.wiseSaying.repository;
 
 import com.ll.domain.wiseSaying.entity.WiseSaying;
 import com.ll.global.app.AppConfig;
+import com.ll.standard.dto.Pageable;
 import com.ll.standard.util.Util;
 import org.junit.jupiter.api.*;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -194,7 +194,7 @@ public class WiseSayingFileRepositoryTest {
     }
 
     @Test
-    @DisplayName("페이징 : content")
+    @DisplayName("페이징 : Pageable")
     public void t11() {
         WiseSaying wiseSaying1 = new WiseSaying(0, "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");
         wiseSayingRepository.save(wiseSaying1);
@@ -207,9 +207,12 @@ public class WiseSayingFileRepositoryTest {
 
         int page = 1;
         int itemsPerPage = 2;
-        List<WiseSaying> content = wiseSayingRepository.pageableAll(itemsPerPage, page);
+        Pageable pageable = wiseSayingRepository.pageableAll(itemsPerPage, page);
 
-        assertThat(content)
+        assertThat(pageable.getTotalItems())
+                .isEqualTo(3);
+
+        assertThat(pageable.getContent())
                 .containsExactlyInAnyOrder(wiseSaying3, wiseSaying2);
     }
 }
