@@ -29,9 +29,6 @@ public class WiseSayingController {
     }
 
     public void actionList(Command command) {
-        System.out.println("번호 / 작가 / 명언");
-        System.out.println("----------------------");
-
         String keyword = command.getParam("keyword", "");
         String keywordType = command.getParam("keywordType", "content");
         int itemsPerPage = 5;
@@ -42,6 +39,16 @@ public class WiseSayingController {
         Pageable<WiseSaying> pageable = hasKeyword
                 ? wiseSayingService.pageable(keywordType, keyword, itemsPerPage, page)
                 : wiseSayingService.pageableAll(itemsPerPage, page);
+
+        if (hasKeyword) {
+            System.out.println("----------------------");
+            System.out.println("검색타입 : " + keywordType);
+            System.out.println("검색어 : " + keyword);
+            System.out.println("----------------------");
+        }
+
+        System.out.println("번호 / 작가 / 명언");
+        System.out.println("----------------------");
 
         for (WiseSaying wiseSaying : pageable.getContent()) {
             System.out.println(wiseSaying.getId() + " / " + wiseSaying.getAuthor() + " / " + wiseSaying.getContent());

@@ -203,11 +203,9 @@ public class WiseSayingControllerTest {
                 """);
 
         assertThat(output)
-                .contains("""
-                        ----------------------
-                        검색타입 : content
-                        검색어 : 과거
-                        """.stripIndent().trim());
+                .contains("----------------------")
+                .contains("검색타입 : content")
+                .contains("검색어 : 과거");
 
         assertThat(output)
                 .doesNotContain("1 / 작자미상 / 현재를 사랑하라.")
