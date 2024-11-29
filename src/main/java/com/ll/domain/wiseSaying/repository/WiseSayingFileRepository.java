@@ -192,4 +192,34 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
                 .content(content)
                 .build();
     }
+
+    @Override
+    public Pageable<WiseSaying> pageable(String keywordType, String keyword, int itemsPerPage, int page) {
+        int totalItems = count(keywordType, keyword);
+
+        List<WiseSaying> content = findAll()
+                .stream()
+                .filter(wiseSaying -> {
+                    if (keywordType.equals("content")) {
+                        return wiseSaying.getContent().contains(keyword);
+                    }
+
+                    if (keywordType.equals("author")) {
+                        return wiseSaying.getAuthor().contains(keyword);
+                    }
+
+                    return false;
+                })
+                .skip((long) (page - 1) * itemsPerPage)
+                .limit(itemsPerPage)
+                .toList();
+
+        return Pageable.<WiseSaying>builder()
+                .totalItems(totalItems)
+                .totalPages(totalPages(totalItems, itemsPerPage))
+                .itemsPerPage(itemsPerPage)
+                .page(page)
+                .content(content)
+                .build();
+    }
 }
