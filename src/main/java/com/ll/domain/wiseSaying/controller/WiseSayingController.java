@@ -7,6 +7,8 @@ import com.ll.standard.dto.Pageable;
 
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class WiseSayingController {
     private final Scanner scanner;
@@ -53,6 +55,15 @@ public class WiseSayingController {
         for (WiseSaying wiseSaying : pageable.getContent()) {
             System.out.println(wiseSaying.getId() + " / " + wiseSaying.getAuthor() + " / " + wiseSaying.getContent());
         }
+
+        System.out.println("----------------------");
+
+        System.out.print("페이지 : ");
+        String pageMenu = IntStream.rangeClosed(1, pageable.getTotalPages())
+                .mapToObj(i -> i == page ? "[" + i + "]" : String.valueOf(i))
+                .collect(Collectors.joining(" "))
+                .toString();
+        System.out.println(pageMenu);
     }
 
     public void actionDelete(Command command) {
