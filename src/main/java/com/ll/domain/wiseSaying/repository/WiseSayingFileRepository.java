@@ -3,8 +3,8 @@ package com.ll.domain.wiseSaying.repository;
 import com.ll.domain.wiseSaying.entity.WiseSaying;
 import com.ll.global.app.AppConfig;
 import com.ll.standard.util.Util;
+import lombok.SneakyThrows;
 
-import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +45,7 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
         return wiseSaying;
     }
 
+    @SneakyThrows
     @Override
     public List<WiseSaying> findAll() {
         try {
@@ -57,8 +58,6 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
                     .toList();
         } catch (NoSuchFileException e) {
             return List.of();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -133,16 +132,13 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
         }
     }
 
+    @SneakyThrows
     @Override
     public int count() {
-        try {
-            return (int) Util.file.walkRegularFiles(
-                            getTableDirPath(),
-                            "\\d+\\.json"
-                    )
-                    .count();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return (int) Util.file.walkRegularFiles(
+                        getTableDirPath(),
+                        "\\d+\\.json"
+                )
+                .count();
     }
 }
