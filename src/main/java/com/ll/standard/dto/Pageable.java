@@ -10,5 +10,8 @@ import java.util.List;
 @Getter
 public class Pageable {
     private int totalItems;
+    private int totalPages;
+    private int itemsPerPage;
+    private int page;
     private List<WiseSaying> content;
 }

@@ -147,8 +147,8 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
     }
 
     @Override
-    public int totalPages(int itemsPerPage) {
-        return (int) Math.ceil((double) count() / itemsPerPage);
+    public int totalPages(int totalItems, int itemsPerPage) {
+        return (int) Math.ceil((double) totalItems / itemsPerPage);
     }
 
     @Override
@@ -164,6 +164,9 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
         return Pageable
                 .builder()
                 .totalItems(totalItems)
+                .itemsPerPage(itemsPerPage)
+                .totalPages(totalPages(totalItems, itemsPerPage))
+                .page(page)
                 .content(content)
                 .build();
     }

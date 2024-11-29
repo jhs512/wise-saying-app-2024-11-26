@@ -187,8 +187,9 @@ public class WiseSayingFileRepositoryTest {
         WiseSaying wiseSaying3 = new WiseSaying(0, "삶이 있는 한 희망은 있다.", "톨스토이");
         wiseSayingRepository.save(wiseSaying3);
 
+        int totalItems = wiseSayingRepository.count();
         int itemsPerPage = 2;
-        int totalPages = wiseSayingRepository.totalPages(itemsPerPage);
+        int totalPages = wiseSayingRepository.totalPages(totalItems, itemsPerPage);
 
         assertThat(totalPages).isEqualTo(2);
     }
@@ -211,6 +212,15 @@ public class WiseSayingFileRepositoryTest {
 
         assertThat(pageable.getTotalItems())
                 .isEqualTo(3);
+
+        assertThat(pageable.getTotalPages())
+                .isEqualTo(2);
+
+        assertThat(pageable.getItemsPerPage())
+                .isEqualTo(2);
+
+        assertThat(pageable.getPage())
+                .isEqualTo(1);
 
         assertThat(pageable.getContent())
                 .containsExactlyInAnyOrder(wiseSaying3, wiseSaying2);

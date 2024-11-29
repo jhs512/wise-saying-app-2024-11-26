@@ -23,7 +23,7 @@ public interface WiseSayingRepository {
 
     int count();
 
-    int totalPages(int itemsPerPage);
+    int totalPages(int totalItems, int itemsPerPage);
 
     Pageable pageableAll(int itemsPerPage, int page);
 }
