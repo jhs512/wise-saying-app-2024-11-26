@@ -87,4 +87,30 @@ public class WiseSayingDbRepositoryTest {
                 wiseSayingRepository.findAll()
         ).containsExactlyInAnyOrder(wiseSaying1, wiseSaying2);
     }
+
+    @Test
+    @DisplayName("명언 수정")
+    public void t5() {
+        WiseSaying wiseSaying = new WiseSaying(0, "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");
+        wiseSayingRepository.save(wiseSaying);
+
+        int wiseSayingId = wiseSaying.getId();
+
+        wiseSaying.setContent("나의 삶의 가치는 나의 결정에 달려있다.");
+        wiseSaying.setAuthor("아인슈타인");
+
+        wiseSayingRepository.save(wiseSaying);
+
+        // 수정을 해도 id가 변경되지 않는다는 것을 테스트
+        assertThat(
+                wiseSayingId
+        ).isEqualTo(wiseSaying.getId());
+
+        Optional<WiseSaying> opWiseSaying = wiseSayingRepository.findById(wiseSaying.getId());
+
+        // 수정된 명언을 DB에서 조회하여 확인
+        assertThat(
+                opWiseSaying.get()
+        ).isEqualTo(wiseSaying);
+    }
 }
