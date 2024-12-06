@@ -1,7 +1,11 @@
 package com.ll.domain.wiseSaying.repository;
 
+import com.ll.domain.wiseSaying.entity.WiseSaying;
 import com.ll.global.app.AppConfig;
 import com.ll.standard.simpleDb.SimpleDb;
+import com.ll.standard.simpleDb.Sql;
+
+import java.util.Optional;
 
 public class WiseSayingDbRepository {
     private final SimpleDb simpleDb;
@@ -41,5 +45,34 @@ public class WiseSayingDbRepository {
                         TRUNCATE TABLE wiseSaying
                         """
         );
+    }
+
+    public WiseSaying save(WiseSaying wiseSaying) {
+        Sql sql = simpleDb.genSql();
+
+        sql.append("INSERT INTO wiseSaying")
+                .append("SET content = ?", wiseSaying.getContent())
+                .append(", author = ?", wiseSaying.getAuthor());
+
+        int id = (int) sql.insert();
+
+        wiseSaying.setId(id);
+
+        return wiseSaying;
+    }
+
+    public Optional<WiseSaying> findById(int id) {
+        Sql sql = simpleDb.genSql();
+
+        sql.append("SELECT * FROM wiseSaying")
+                .append("WHERE id = ?", id);
+
+        WiseSaying wiseSaying = sql.selectRow(WiseSaying.class);
+
+        if (wiseSaying == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(wiseSaying);
     }
 }
