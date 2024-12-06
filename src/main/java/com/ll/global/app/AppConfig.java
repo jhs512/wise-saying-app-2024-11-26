@@ -34,4 +34,8 @@ public class AppConfig {
     public static String getDbDirPath() {
         return "db/" + mode;
     }
+
+    public static String getDbName() {
+        return "wiseSaying__" + mode;
+    }
 }
