@@ -80,7 +80,7 @@ public class WiseSayingFileRepositoryTest {
 
         assertThat(
                 wiseSayingRepository.findAll()
-        ).containsExactlyInAnyOrder(wiseSaying1, wiseSaying2);
+        ).containsExactly(wiseSaying2, wiseSaying1);
     }
 
     @Test

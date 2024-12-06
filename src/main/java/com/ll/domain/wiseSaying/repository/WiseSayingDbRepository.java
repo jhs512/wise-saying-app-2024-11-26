@@ -6,7 +6,6 @@ import com.ll.standard.simpleDb.SimpleDb;
 import com.ll.standard.simpleDb.Sql;
 import com.ll.standard.util.Util;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,14 +100,23 @@ public class WiseSayingDbRepository {
         Sql sql = simpleDb.genSql();
 
         sql.append("SELECT * FROM wiseSaying")
-                .append("ORDER BY id");
+                .append("ORDER BY id DESC");
+
+        return sql.selectRows(WiseSaying.class);
+    }
+
+    public List<WiseSaying> findAllByOrerByIdAsc() {
+        Sql sql = simpleDb.genSql();
+
+        sql.append("SELECT * FROM wiseSaying")
+                .append("ORDER BY id ASC");
 
         return sql.selectRows(WiseSaying.class);
     }
 
     public void archive(String archiveDirPath) {
         String jsonStr = Util.json.toString(
-                findAll()
+                findAllByOrerByIdAsc()
                         .stream()
                         .map(WiseSaying::toMap)
                         .toList()
