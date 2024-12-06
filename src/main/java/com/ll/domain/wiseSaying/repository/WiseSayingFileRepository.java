@@ -89,6 +89,10 @@ public class WiseSayingFileRepository implements WiseSayingRepository {
         Util.file.set(getLastIdPath(), id);
     }
 
+    public static void createTable() {
+        dropTable();
+    }
+
     public static void dropTable() {
         Util.file.rmdir(WiseSayingFileRepository.getTableDirPath());
     }

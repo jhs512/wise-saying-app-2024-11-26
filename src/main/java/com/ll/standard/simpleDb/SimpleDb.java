@@ -197,7 +197,11 @@ public class SimpleDb {
     }
 
     public <T> List<T> selectRows(String sql, Class<?> cls, Object... params) {
-        return selectRows(sql, params)
+        List<Map<String, Object>> rows = selectRows(sql, params);
+
+        if (rows == null) return List.of();
+
+        return rows
                 .stream()
                 .map(row -> (T) Util.mapper.mapToObj(row, cls))
                 .toList();

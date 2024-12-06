@@ -13,6 +13,10 @@ import java.util.Optional;
 public class WiseSayingDbRepository implements WiseSayingRepository {
     private final SimpleDb simpleDb;
 
+    public static void clearTable() {
+        new WiseSayingDbRepository().truncateTable();
+    }
+
     public WiseSayingDbRepository() {
         simpleDb = new SimpleDb(
                 "localhost",

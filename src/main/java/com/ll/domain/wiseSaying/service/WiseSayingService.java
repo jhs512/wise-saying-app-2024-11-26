@@ -1,8 +1,10 @@
 package com.ll.domain.wiseSaying.service;
 
 import com.ll.domain.wiseSaying.entity.WiseSaying;
+import com.ll.domain.wiseSaying.repository.WiseSayingDbRepository;
 import com.ll.domain.wiseSaying.repository.WiseSayingFileRepository;
 import com.ll.domain.wiseSaying.repository.WiseSayingRepository;
+import com.ll.global.app.AppConfig;
 import com.ll.standard.dto.Pageable;
 
 import java.util.List;
@@ -12,7 +14,9 @@ public class WiseSayingService {
     private final WiseSayingRepository wiseSayingRepository;
 
     public WiseSayingService() {
-        this.wiseSayingRepository = new WiseSayingFileRepository();
+        this.wiseSayingRepository = AppConfig.getRepositoryMode().equals("db") ?
+                new WiseSayingDbRepository() :
+                new WiseSayingFileRepository();
     }
 
     public WiseSaying add(String content, String author) {

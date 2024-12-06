@@ -1,7 +1,11 @@
 package com.ll.global.app;
 
+import lombok.Getter;
+
 public class AppConfig {
-    public static String mode;
+    private static String mode;
+    @Getter
+    private static String repositoryMode = "db";
 
     static {
         setDevMode();

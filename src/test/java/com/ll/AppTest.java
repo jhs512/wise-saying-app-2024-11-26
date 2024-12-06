@@ -1,5 +1,6 @@
 package com.ll;
 
+import com.ll.domain.wiseSaying.repository.WiseSayingDbRepository;
 import com.ll.domain.wiseSaying.repository.WiseSayingFileRepository;
 import com.ll.global.app.App;
 import com.ll.global.app.AppConfig;
@@ -69,7 +70,11 @@ public class AppTest {
     }
 
     public static void dropTables() {
-        WiseSayingFileRepository.dropTable();
+        if (AppConfig.getRepositoryMode().equals("db")) {
+            WiseSayingDbRepository.clearTable();
+        } else {
+            WiseSayingFileRepository.dropTable();
+        }
     }
 
     public static void makeSampleData(int items) {
