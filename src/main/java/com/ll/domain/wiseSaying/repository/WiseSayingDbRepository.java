@@ -2,6 +2,7 @@ package com.ll.domain.wiseSaying.repository;
 
 import com.ll.domain.wiseSaying.entity.WiseSaying;
 import com.ll.global.app.AppConfig;
+import com.ll.standard.dto.Pageable;
 import com.ll.standard.simpleDb.SimpleDb;
 import com.ll.standard.simpleDb.Sql;
 import com.ll.standard.util.Util;
@@ -131,5 +132,24 @@ public class WiseSayingDbRepository {
         sql.append("SELECT COUNT(*) FROM wiseSaying");
 
         return (int) sql.selectLong();
+    }
+
+    public Pageable<WiseSaying> pageableAll(int itemsPerPage, int page) {
+        int totalItems = count();
+
+        Sql sql = simpleDb.genSql();
+
+        sql.append("SELECT * FROM wiseSaying")
+                .append("ORDER BY id DESC")
+                .append("LIMIT ?, ?", (page - 1) * itemsPerPage, itemsPerPage);
+
+        List<WiseSaying> content = sql.selectRows(WiseSaying.class);
+
+        return Pageable.<WiseSaying>builder()
+                .totalItems(totalItems)
+                .itemsPerPage(itemsPerPage)
+                .page(page)
+                .content(content)
+                .build();
     }
 }
