@@ -124,4 +124,12 @@ public class WiseSayingDbRepository {
 
         Util.file.set(archiveDirPath, jsonStr);
     }
+
+    public int count() {
+        Sql sql = simpleDb.genSql();
+
+        sql.append("SELECT COUNT(*) FROM wiseSaying");
+
+        return (int) sql.selectLong();
+    }
 }
