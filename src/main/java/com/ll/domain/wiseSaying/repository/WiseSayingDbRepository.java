@@ -152,4 +152,21 @@ public class WiseSayingDbRepository {
                 .content(content)
                 .build();
     }
+
+    public int count(String keywordType, String keyword) {
+        Sql sql = simpleDb.genSql();
+
+        sql.append("SELECT COUNT(*) FROM wiseSaying");
+
+        switch (keywordType) {
+            case "content":
+                sql.append("WHERE content LIKE ?", "%" + keyword + "%");
+                break;
+            case "author":
+                sql.append("WHERE author LIKE ?", "%" + keyword + "%");
+                break;
+        }
+
+        return (int) sql.selectLong();
+    }
 }
