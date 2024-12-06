@@ -5,6 +5,7 @@ import com.ll.global.app.AppConfig;
 import com.ll.standard.simpleDb.SimpleDb;
 import com.ll.standard.simpleDb.Sql;
 
+import java.util.List;
 import java.util.Optional;
 
 public class WiseSayingDbRepository {
@@ -83,5 +84,14 @@ public class WiseSayingDbRepository {
                 .append("WHERE id = ?", id);
 
         return sql.delete() > 0;
+    }
+
+    public List<WiseSaying> findAll() {
+        Sql sql = simpleDb.genSql();
+
+        sql.append("SELECT * FROM wiseSaying")
+                .append("ORDER BY id");
+
+        return sql.selectRows(WiseSaying.class);
     }
 }
