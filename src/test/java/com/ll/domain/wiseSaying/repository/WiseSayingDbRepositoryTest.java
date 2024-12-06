@@ -208,4 +208,18 @@ public class WiseSayingDbRepositoryTest {
         assertThat(pageable.getContent())
                 .containsExactly(wiseSaying3, wiseSaying2);
     }
+
+    @Test
+    @DisplayName("페이징(with 검색) : count")
+    public void t10() {
+        WiseSaying wiseSaying1 = new WiseSaying(0, "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");
+        wiseSayingRepository.save(wiseSaying1);
+
+        WiseSaying wiseSaying2 = new WiseSaying(0, "나의 삶의 가치는 나의 결정에 달려있다.", "아인슈타인");
+        wiseSayingRepository.save(wiseSaying2);
+
+        assertThat(
+                wiseSayingRepository.count("author", "괴")
+        ).isEqualTo(1);
+    }
 }
