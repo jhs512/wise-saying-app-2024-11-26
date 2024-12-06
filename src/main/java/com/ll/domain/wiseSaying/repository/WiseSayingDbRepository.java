@@ -4,7 +4,9 @@ import com.ll.domain.wiseSaying.entity.WiseSaying;
 import com.ll.global.app.AppConfig;
 import com.ll.standard.simpleDb.SimpleDb;
 import com.ll.standard.simpleDb.Sql;
+import com.ll.standard.util.Util;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,8 +61,7 @@ public class WiseSayingDbRepository {
             int id = (int) sql.insert();
 
             wiseSaying.setId(id);
-        }
-        else {
+        } else {
             sql.append("UPDATE wiseSaying")
                     .append("SET content = ?", wiseSaying.getContent())
                     .append(", author = ?", wiseSaying.getAuthor())
@@ -103,5 +104,16 @@ public class WiseSayingDbRepository {
                 .append("ORDER BY id");
 
         return sql.selectRows(WiseSaying.class);
+    }
+
+    public void archive(String archiveDirPath) {
+        String jsonStr = Util.json.toString(
+                findAll()
+                        .stream()
+                        .map(WiseSaying::toMap)
+                        .toList()
+        );
+
+        Util.file.set(archiveDirPath, jsonStr);
     }
 }
