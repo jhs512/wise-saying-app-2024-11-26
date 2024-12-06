@@ -1,5 +1,6 @@
 package com.ll.standard.simpleDb;
 
+import com.ll.global.app.AppConfig;
 import com.ll.standard.util.Util;
 import lombok.RequiredArgsConstructor;
 
@@ -15,9 +16,8 @@ public class SimpleDb {
     private final String dbName;
     private Map<String, Connection> connections = new HashMap<>();
 
-    // 현재는 항상 true로 설정 (개발 환경 확인)
     private boolean isNotProdMode() {
-        return true; // 배포 환경에서 false로 설정할 수 있음
+        return !AppConfig.isProdMode();
     }
 
     private Connection getCurrentThreadConnection() {
