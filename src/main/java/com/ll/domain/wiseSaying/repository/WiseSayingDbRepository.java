@@ -51,13 +51,23 @@ public class WiseSayingDbRepository {
     public WiseSaying save(WiseSaying wiseSaying) {
         Sql sql = simpleDb.genSql();
 
-        sql.append("INSERT INTO wiseSaying")
-                .append("SET content = ?", wiseSaying.getContent())
-                .append(", author = ?", wiseSaying.getAuthor());
+        if (wiseSaying.isNew()) {
+            sql.append("INSERT INTO wiseSaying")
+                    .append("SET content = ?", wiseSaying.getContent())
+                    .append(", author = ?", wiseSaying.getAuthor());
 
-        int id = (int) sql.insert();
+            int id = (int) sql.insert();
 
-        wiseSaying.setId(id);
+            wiseSaying.setId(id);
+        }
+        else {
+            sql.append("UPDATE wiseSaying")
+                    .append("SET content = ?", wiseSaying.getContent())
+                    .append(", author = ?", wiseSaying.getAuthor())
+                    .append("WHERE id = ?", wiseSaying.getId());
+
+            sql.update();
+        }
 
         return wiseSaying;
     }
