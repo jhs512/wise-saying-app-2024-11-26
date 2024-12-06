@@ -119,7 +119,7 @@ public class SimpleDb {
 
     // ResultSet 파싱 (다양한 클래스 타입 지원)
     private <T> T parseResultSet(ResultSet resultSet, Class<T> cls) throws SQLException {
-        if (!resultSet.next()) throw new NoSuchElementException("No data found");
+        if (!resultSet.next()) return null;
 
         return switch (cls.getSimpleName()) {
             case "String" -> (T) resultSet.getString(1);
