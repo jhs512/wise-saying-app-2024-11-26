@@ -169,4 +169,35 @@ public class WiseSayingDbRepository {
 
         return (int) sql.selectLong();
     }
+
+    public Pageable<WiseSaying> pageable(String keywordType, String keyword, int itemsPerPage, int page) {
+        int totalItems = count(keywordType, keyword);
+
+        Sql sql = simpleDb.genSql();
+
+        sql.append("SELECT * FROM wiseSaying");
+
+        switch (keywordType) {
+            case "content":
+                sql.append("WHERE content LIKE ?", "%" + keyword + "%");
+                break;
+            case "author":
+                sql.append("WHERE author LIKE ?", "%" + keyword + "%");
+                break;
+        }
+
+        sql.append("ORDER BY id DESC")
+                .append("LIMIT ?, ?", (page - 1) * itemsPerPage, itemsPerPage);
+
+        List<WiseSaying> content = sql.selectRows(WiseSaying.class);
+
+        return Pageable.<WiseSaying>builder()
+                .totalItems(totalItems)
+                .itemsPerPage(itemsPerPage)
+                .page(page)
+                .keywordType(keywordType)
+                .keyword(keyword)
+                .content(content)
+                .build();
+    }
 }
