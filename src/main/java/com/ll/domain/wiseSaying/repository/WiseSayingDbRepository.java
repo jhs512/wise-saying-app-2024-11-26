@@ -10,7 +10,7 @@ import com.ll.standard.util.Util;
 import java.util.List;
 import java.util.Optional;
 
-public class WiseSayingDbRepository {
+public class WiseSayingDbRepository implements WiseSayingRepository {
     private final SimpleDb simpleDb;
 
     public WiseSayingDbRepository() {
@@ -50,6 +50,7 @@ public class WiseSayingDbRepository {
         );
     }
 
+    @Override
     public WiseSaying save(WiseSaying wiseSaying) {
         Sql sql = simpleDb.genSql();
 
@@ -73,6 +74,7 @@ public class WiseSayingDbRepository {
         return wiseSaying;
     }
 
+    @Override
     public Optional<WiseSaying> findById(int id) {
         Sql sql = simpleDb.genSql();
 
@@ -88,6 +90,7 @@ public class WiseSayingDbRepository {
         return Optional.of(wiseSaying);
     }
 
+    @Override
     public boolean deleteById(int id) {
         Sql sql = simpleDb.genSql();
 
@@ -97,6 +100,7 @@ public class WiseSayingDbRepository {
         return sql.delete() > 0;
     }
 
+    @Override
     public List<WiseSaying> findAll() {
         Sql sql = simpleDb.genSql();
 
@@ -106,7 +110,7 @@ public class WiseSayingDbRepository {
         return sql.selectRows(WiseSaying.class);
     }
 
-    public List<WiseSaying> findAllByOrerByIdAsc() {
+    public List<WiseSaying> findAllByOrderByIdAsc() {
         Sql sql = simpleDb.genSql();
 
         sql.append("SELECT * FROM wiseSaying")
@@ -115,9 +119,10 @@ public class WiseSayingDbRepository {
         return sql.selectRows(WiseSaying.class);
     }
 
+    @Override
     public void archive(String archiveDirPath) {
         String jsonStr = Util.json.toString(
-                findAllByOrerByIdAsc()
+                findAllByOrderByIdAsc()
                         .stream()
                         .map(WiseSaying::toMap)
                         .toList()
@@ -126,6 +131,34 @@ public class WiseSayingDbRepository {
         Util.file.set(archiveDirPath, jsonStr);
     }
 
+    @Override
+    public List<WiseSaying> findByKeyword(String keywordType, String keyword) {
+        Sql sql = simpleDb.genSql();
+
+        sql.append("SELECT * FROM wiseSaying");
+
+        switch (keywordType) {
+            case "content":
+                sql.append("WHERE content LIKE ?", "%" + keyword + "%");
+                break;
+            case "author":
+                sql.append("WHERE author LIKE ?", "%" + keyword + "%");
+                break;
+        }
+
+        sql.append("ORDER BY id DESC");
+
+        return sql.selectRows(WiseSaying.class);
+    }
+
+    @Override
+    public void makeSampleData(int items) {
+        for (int i = 1; i <= items; i++) {
+            save(new WiseSaying(0, "명언 " + i, "작자미상"));
+        }
+    }
+
+    @Override
     public int count() {
         Sql sql = simpleDb.genSql();
 
@@ -134,6 +167,7 @@ public class WiseSayingDbRepository {
         return (int) sql.selectLong();
     }
 
+    @Override
     public Pageable<WiseSaying> pageableAll(int itemsPerPage, int page) {
         int totalItems = count();
 
@@ -153,6 +187,7 @@ public class WiseSayingDbRepository {
                 .build();
     }
 
+    @Override
     public int count(String keywordType, String keyword) {
         Sql sql = simpleDb.genSql();
 
@@ -170,6 +205,7 @@ public class WiseSayingDbRepository {
         return (int) sql.selectLong();
     }
 
+    @Override
     public Pageable<WiseSaying> pageable(String keywordType, String keyword, int itemsPerPage, int page) {
         int totalItems = count(keywordType, keyword);
 
