@@ -2,6 +2,7 @@ package com.ll.domain.wiseSaying.repository;
 
 import com.ll.domain.wiseSaying.entity.WiseSaying;
 import com.ll.global.app.AppConfig;
+import com.ll.standard.util.Util;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -112,5 +113,52 @@ public class WiseSayingDbRepositoryTest {
         assertThat(
                 opWiseSaying.get()
         ).isEqualTo(wiseSaying);
+    }
+
+    @Test
+    @DisplayName("빌드를 하면 data.json 파일이 생성된다.")
+    public void t6() {
+        WiseSaying wiseSaying1 = new WiseSaying(0, "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");
+        wiseSayingRepository.save(wiseSaying1);
+
+        WiseSaying wiseSaying2 = new WiseSaying(0, "나의 삶의 가치는 나의 결정에 달려있다.", "아인슈타인");
+        wiseSayingRepository.save(wiseSaying2);
+
+        wiseSayingRepository.archive(WiseSayingFileRepository.getArchiveDirPath());
+
+        assertThat(
+                Util.file.exists(WiseSayingFileRepository.getArchiveDirPath())
+        ).isTrue();
+    }
+
+    @Test
+    @DisplayName("빌드 시 생성되는 data.json은 배열의 형태이다.")
+    public void t7() {
+        WiseSaying wiseSaying1 = new WiseSaying(0, "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");
+        wiseSayingRepository.save(wiseSaying1);
+
+        WiseSaying wiseSaying2 = new WiseSaying(0, "나의 삶의 가치는 나의 결정에 달려있다.", "아인슈타인");
+        wiseSayingRepository.save(wiseSaying2);
+
+        wiseSayingRepository.archive(WiseSayingFileRepository.getArchiveDirPath());
+
+        String jsonStr = Util.file.get(WiseSayingFileRepository.getArchiveDirPath(), "");
+
+        assertThat(
+                jsonStr
+        ).isEqualTo("""
+                [
+                    {
+                        "id": 1,
+                        "content": "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.",
+                        "author": "괴테"
+                    },
+                    {
+                        "id": 2,
+                        "content": "나의 삶의 가치는 나의 결정에 달려있다.",
+                        "author": "아인슈타인"
+                    }
+                ]
+                """.stripIndent().trim());
     }
 }
