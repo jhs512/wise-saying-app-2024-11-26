@@ -222,4 +222,45 @@ public class WiseSayingDbRepositoryTest {
                 wiseSayingRepository.count("author", "괴")
         ).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("페이징(with 검색) : Pageable")
+    public void t11() {
+        WiseSaying wiseSaying1 = new WiseSaying(0, "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");
+        wiseSayingRepository.save(wiseSaying1);
+
+        WiseSaying wiseSaying2 = new WiseSaying(0, "나의 삶의 가치는 나의 결정에 달려있다.", "아인슈타인");
+        wiseSayingRepository.save(wiseSaying2);
+
+        WiseSaying wiseSaying3 = new WiseSaying(0, "삶이 있는 한 희망은 있다.", "톨스토이");
+        wiseSayingRepository.save(wiseSaying3);
+
+        WiseSaying wiseSaying4 = new WiseSaying(0, "너 자신인 사랑은 지금 무엇을 하려 하는가?", "닐 도널드 윌시");
+        wiseSayingRepository.save(wiseSaying4);
+
+        int page = 1;
+        int itemsPerPage = 2;
+        Pageable<WiseSaying> pageable = wiseSayingRepository.pageable("content", "다", itemsPerPage, page);
+
+        assertThat(pageable.getTotalItems())
+                .isEqualTo(3);
+
+        assertThat(pageable.getTotalPages())
+                .isEqualTo(2);
+
+        assertThat(pageable.getItemsPerPage())
+                .isEqualTo(2);
+
+        assertThat(pageable.getPage())
+                .isEqualTo(1);
+
+        assertThat(pageable.getKeywordType())
+                .isEqualTo("content");
+
+        assertThat(pageable.getKeyword())
+                .isEqualTo("다");
+
+        assertThat(pageable.getContent())
+                .containsExactlyInAnyOrder(wiseSaying3, wiseSaying2);
+    }
 }
